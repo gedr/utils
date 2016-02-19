@@ -1,6 +1,7 @@
 package ru.gedr.tuple;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,6 +68,33 @@ public abstract class Unit<T> implements Tuple {
 		return false;
 	}
 
+	public Iterator<Object> iterator() {
+		return new TupleIterator(this);
+	}
+
+	public int compareTo(Object o) {
+		@SuppressWarnings("unchecked")
+		T thatValue = (T) ((Unit<?>) o).getFirst();
+
+		if ( Objects.equals(this.getFirst(), thatValue) ) {
+			return 0;
+		}
+		if ((this.getFirst() != null) && (this.getFirst() instanceof Comparable<?>)) {
+			@SuppressWarnings("unchecked")
+			Comparable<? super T> cmpr = (Comparable<? super T>) this.getFirst();
+			return thatValue == null ? -1 : cmpr.compareTo(thatValue);
+
+		}
+		if ((thatValue != null) && (thatValue instanceof Comparable<?>)) {
+			@SuppressWarnings("unchecked")
+			Comparable<? super T> cmpr = (Comparable<? super T>) thatValue;
+			return this.getFirst() == null ? +1 : cmpr.compareTo(this.getFirst());
+
+		}
+		throw new UnsupportedOperationException("not found Comparable interface");
+	}
+
+
 	// =================================================================================================================
 	// Getter & Setter
 	// =================================================================================================================
@@ -84,4 +112,5 @@ public abstract class Unit<T> implements Tuple {
 	// =================================================================================================================
 	// Inner and Anonymous Classes
 	// =================================================================================================================
+
 }
