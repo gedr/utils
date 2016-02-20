@@ -1,6 +1,9 @@
-package ru.gedr.tuple;
+package ru.gedr.tuples;
 
-public class ImmutablePair<Ta, Tb> extends Pair<Ta, Tb> {
+import ru.gedr.comparators.GenericComparator;
+
+
+public abstract class Triple<Ta, Tb, Tc> extends Tuple {
 	// =================================================================================================================
 	// Constants
 	// =================================================================================================================
@@ -9,64 +12,72 @@ public class ImmutablePair<Ta, Tb> extends Pair<Ta, Tb> {
 	// =================================================================================================================
 	// Fields
 	// =================================================================================================================
-	protected Ta first;
-	protected Tb second;
 
 	// =================================================================================================================
 	// Constructors
 	// =================================================================================================================
-	public ImmutablePair(Ta first, Tb second) {
-		this.first = first;
-		this.second = second;
-	}
 
 	// =================================================================================================================
 	// Methods for/from SuperClass/Interface
 	// =================================================================================================================
 	@Override
-	public Ta getFirst() {
-		return first;
+	public String toString(String format) {
+		return String.format(format, getFirst(), getSecond(), getThird());
 	}
 
 	@Override
-	public Tb getSecond() {
-		return second;
+	public int getDimension() {
+		return 3;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Ta getLeft() {
-		return first;
+	public <TT> TT getBy(int index) {
+		switch (index) {
+			case 1 :
+				return (TT) getFirst();
+			case 2 :
+				return (TT) getSecond();
+			case 3 :
+				return (TT) getThird();
+
+			default :
+				throw new IndexOutOfBoundsException("Tuple Triple haven't index=" + index);
+		}
 	}
 
-	@Override
-	public Tb getRight() {
-		return second;
-	}
+	@SuppressWarnings("unchecked")
+	public int compareTo(Object o) {
+		try {
+			Triple<?, ?, ?> t = (Triple<?, ?, ?>) o;
 
-	@Override
-	public Ta getKey() {
-		return first;
-	}
-
-	@Override
-	public Tb getValue() {
-		return second;
-	}
-
-	public Tb setValue(Tb value) {
-		throw new UnsupportedOperationException();
+			int res = GenericComparator.compare(this.getFirst(), (Ta) t.getFirst());
+			if (res == 0) {
+				res = GenericComparator.compare(this.getSecond(), (Tb) t.getSecond());
+			}
+			if (res == 0) {
+				res = GenericComparator.compare(this.getThird(), (Tc) t.getThird());
+			}
+			return res;
+		} catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
 	}
 
 	// =================================================================================================================
 	// Getter & Setter
 	// =================================================================================================================
-	public static <A, B> ImmutablePair<A, B> of(A first, B second) {
-		return new ImmutablePair<A, B>(first, second);
-	}
 
 	// =================================================================================================================
 	// Methods
 	// =================================================================================================================
+	public abstract Ta getFirst();
+	public abstract Tb getSecond();
+	public abstract Tc getThird();
+
+	public abstract Ta getLeft();
+	public abstract Tb getMiddle();
+	public abstract Tc getRight();
 
 	// =================================================================================================================
 	// Inner and Anonymous Classes

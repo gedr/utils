@@ -1,4 +1,4 @@
-package ru.gedr.tuple;
+package ru.gedr.tuples;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

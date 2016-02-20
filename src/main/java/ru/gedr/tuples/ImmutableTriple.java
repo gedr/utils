@@ -1,6 +1,6 @@
-package ru.gedr.tuple;
+package ru.gedr.tuples;
 
-public class MutableUnit<T> extends ImmutableUnit<T> {
+public class ImmutableTriple<Ta, Tb, Tc> extends Triple<Ta, Tb, Tc> {
 	// =================================================================================================================
 	// Constants
 	// =================================================================================================================
@@ -9,21 +9,51 @@ public class MutableUnit<T> extends ImmutableUnit<T> {
 	// =================================================================================================================
 	// Fields
 	// =================================================================================================================
+	protected Ta first;
+	protected Tb second;
+	protected Tc third;
 
 	// =================================================================================================================
 	// Constructors
 	// =================================================================================================================
-	public MutableUnit() {
-		super(null);
-	}
-
-	public MutableUnit(T value) {
-		super(value);
+	public ImmutableTriple(Ta first, Tb second, Tc third) {
+		this.first = first;
+		this.second = second;
+		this.third = third;
 	}
 
 	// =================================================================================================================
 	// Methods for/from SuperClass/Interface
 	// =================================================================================================================
+	@Override
+	public Ta getFirst() {
+		return first;
+	}
+
+	@Override
+	public Tb getSecond() {
+		return second;
+	}
+
+	@Override
+	public Tc getThird() {
+		return third;
+	}
+
+	@Override
+	public Ta getLeft() {
+		return first;
+	}
+
+	@Override
+	public Tb getMiddle() {
+		return second;
+	}
+
+	@Override
+	public Tc getRight() {
+		return third;
+	}
 
 	// =================================================================================================================
 	// Getter & Setter
@@ -32,18 +62,9 @@ public class MutableUnit<T> extends ImmutableUnit<T> {
 	// =================================================================================================================
 	// Methods
 	// =================================================================================================================
-	public static <V> MutableUnit<V> of(V value) {
-		return new MutableUnit<V>(value);
+	public static <A, B, C> ImmutableTriple<A, B, C> of(A first, B second, C third) {
+		return new ImmutableTriple<A, B, C>(first, second, third);
 	}
-
-	public void setValue(T value) {
-		this.value = value;
-	}
-
-	public void setFirst(T value) {
-		this.value = value;
-	}
-
 
 	// =================================================================================================================
 	// Inner and Anonymous Classes

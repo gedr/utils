@@ -1,10 +1,32 @@
-package ru.gedr.tuple;
+package ru.gedr.tuples;
 
-public class MutablePair<Ta, Tb> extends ImmutablePair<Ta, Tb> {
+public abstract class Octet<Ta, Tb, Tc, Td, Te, Tf, Tg, Th> extends Tuple {
+
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public String toString(String format) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getDimension() {
+		return 8;
+	}
+
+	@Override
+	public <TT> TT getBy(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	// =================================================================================================================
 	// Constants
 	// =================================================================================================================
-	private static final long serialVersionUID = 1L;
 
 	// =================================================================================================================
 	// Fields
@@ -13,21 +35,10 @@ public class MutablePair<Ta, Tb> extends ImmutablePair<Ta, Tb> {
 	// =================================================================================================================
 	// Constructors
 	// =================================================================================================================
-	public MutablePair() {
-		super(null, null);
-	}
-
-	public MutablePair(Ta first, Tb second) {
-		super(first, second);
-	}
 
 	// =================================================================================================================
 	// Methods for/from SuperClass/Interface
 	// =================================================================================================================
-	public Tb setValue(Tb value) {
-		this.second = value;
-		return this.second;
-	}
 
 	// =================================================================================================================
 	// Getter & Setter
@@ -36,30 +47,14 @@ public class MutablePair<Ta, Tb> extends ImmutablePair<Ta, Tb> {
 	// =================================================================================================================
 	// Methods
 	// =================================================================================================================
-	public static <A, B> MutablePair<A, B> of(A first, B second) {
-		return new MutablePair<A, B>(first, second);
-	}
-
-	public void setFirst(Ta first) {
-		this.first = first;
-	}
-
-	public void setSecond(Tb second) {
-		this.second = second;
-	}
-
-	public void setLeft(Ta value) {
-		this.first = value;
-	}
-
-	public void setRight(Tb value) {
-		this.second = value;
-	}
-
-	public Ta setKey(Ta value) {
-		this.first = value;
-		return this.first;
-	}
+	public abstract Ta getFirst();
+	public abstract Tb getSecond();
+	public abstract Tc getThird();
+	public abstract Td getFourth();
+	public abstract Te getFifth();
+	public abstract Tf getSixth();
+	public abstract Tg getSeventh();
+	public abstract Th getEighth();
 
 	// =================================================================================================================
 	// Inner and Anonymous Classes

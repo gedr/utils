@@ -1,4 +1,4 @@
-package ru.gedr.tuple;
+package ru.gedr.tuples;
 
 public class ImmutableUnit<T> extends Unit<T>{
 	// =================================================================================================================
