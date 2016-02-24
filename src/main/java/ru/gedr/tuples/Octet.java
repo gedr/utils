@@ -1,32 +1,12 @@
 package ru.gedr.tuples;
 
-public abstract class Octet<Ta, Tb, Tc, Td, Te, Tf, Tg, Th> extends Tuple {
+import ru.gedr.comparators.GenericComparator;
 
-	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public String toString(String format) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getDimension() {
-		return 8;
-	}
-
-	@Override
-	public <TT> TT getBy(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+public abstract class Octet<Ta, Tb, Tc, Td, Te, Tf, Tg, Th> extends Septet<Ta, Tb, Tc, Td, Te, Tf, Tg> {
 	// =================================================================================================================
 	// Constants
 	// =================================================================================================================
+	private static final long serialVersionUID = 1L;
 
 	// =================================================================================================================
 	// Fields
@@ -39,6 +19,39 @@ public abstract class Octet<Ta, Tb, Tc, Td, Te, Tf, Tg, Th> extends Tuple {
 	// =================================================================================================================
 	// Methods for/from SuperClass/Interface
 	// =================================================================================================================
+	@Override
+	public int getDimension() {
+		return 8;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <TT> TT getBy(int index) {
+		if (index == 8) {
+			return (TT) getEighth();
+		}
+		return super.getBy(index);
+	}
+
+	@Override
+	public String toString(String format) {
+		return String.format(format, getFirst(), getSecond(), getThird(), getFourth(), getFifth(), getSixth(),
+				getSeventh(), getEighth());
+	}
+
+	@SuppressWarnings("unchecked")
+	public int compareTo(Object o) {
+		int res = super.compareTo(o);
+		if (res == 0) {
+			try {
+				Octet<?, ?, ?, ?, ?, ?, ?, ?> t = (Octet<?, ?, ?, ?, ?, ?, ?, ?>) o;
+				res = GenericComparator.compare(this.getEighth(), (Th) t.getEighth());
+			} catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+		return res;
+	}
 
 	// =================================================================================================================
 	// Getter & Setter
@@ -47,13 +60,6 @@ public abstract class Octet<Ta, Tb, Tc, Td, Te, Tf, Tg, Th> extends Tuple {
 	// =================================================================================================================
 	// Methods
 	// =================================================================================================================
-	public abstract Ta getFirst();
-	public abstract Tb getSecond();
-	public abstract Tc getThird();
-	public abstract Td getFourth();
-	public abstract Te getFifth();
-	public abstract Tf getSixth();
-	public abstract Tg getSeventh();
 	public abstract Th getEighth();
 
 	// =================================================================================================================
