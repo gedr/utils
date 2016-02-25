@@ -1,8 +1,6 @@
 package ru.gedr.tuples;
 
-import ru.gedr.comparators.GenericComparator;
-
-public abstract class Quartet<Ta, Tb, Tc, Td> extends Tuple {
+public class ImmutableSeptet<Ta, Tb, Tc, Td, Te, Tf, Tg> extends Septet<Ta, Tb, Tc, Td, Te, Tf, Tg> {
 	// =================================================================================================================
 	// Constants
 	// =================================================================================================================
@@ -11,61 +9,63 @@ public abstract class Quartet<Ta, Tb, Tc, Td> extends Tuple {
 	// =================================================================================================================
 	// Fields
 	// =================================================================================================================
+	protected Ta first;
+	protected Tb second;
+	protected Tc third;
+	protected Td fourth;
+	protected Te fifth;
+	protected Tf sixth;
+	protected Tg seventh;
 
 	// =================================================================================================================
 	// Constructors
 	// =================================================================================================================
+	public ImmutableSeptet(Ta first, Tb second, Tc third, Td fourth, Te fifth, Tf sixth, Tg seventh) {
+		this.first = first;
+		this.second = second;
+		this.third = third;
+		this.fourth = fourth;
+		this.fifth = fifth;
+		this.sixth = sixth;
+		this.seventh = seventh;
+	}
 
 	// =================================================================================================================
 	// Methods for/from SuperClass/Interface
 	// =================================================================================================================
 	@Override
-	public int getDimension() {
-		return 4;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <TT> TT getBy(int index) {
-		switch (index) {
-			case 1 :
-				return (TT) getFirst();
-			case 2 :
-				return (TT) getSecond();
-			case 3 :
-				return (TT) getThird();
-			case 4 :
-				return (TT) getFourth();
-
-			default :
-				throw new IndexOutOfBoundsException("Tuple haven't index=" + index);
-		}
+	public Ta getFirst() {
+		return first;
 	}
 
 	@Override
-	public String toString(String format) {
-		return String.format(format, getFirst(), getSecond(), getThird(), getFourth());
+	public Tb getSecond() {
+		return second;
 	}
 
-	@SuppressWarnings("unchecked")
-	public int compareTo(Object o) {
-		try {
-			Quartet<?, ?, ?, ?> t = (Quartet<?, ?, ?, ?>) o;
+	@Override
+	public Tc getThird() {
+		return third;
+	}
 
-			int res = GenericComparator.compare(this.getFirst(), (Ta) t.getFirst());
-			if (res == 0) {
-				res = GenericComparator.compare(this.getSecond(), (Tb) t.getSecond());
-			}
-			if (res == 0) {
-				res = GenericComparator.compare(this.getThird(), (Tc) t.getThird());
-			}
-			if (res == 0) {
-				res = GenericComparator.compare(this.getFourth(), (Td) t.getFourth());
-			}
-			return res;
-		} catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
+	@Override
+	public Td getFourth() {
+		return fourth;
+	}
+
+	@Override
+	public Te getFifth() {
+		return fifth;
+	}
+
+	@Override
+	public Tf getSixth() {
+		return sixth;
+	}
+
+	@Override
+	public Tg getSeventh() {
+		return seventh;
 	}
 
 	// =================================================================================================================
@@ -75,10 +75,10 @@ public abstract class Quartet<Ta, Tb, Tc, Td> extends Tuple {
 	// =================================================================================================================
 	// Methods
 	// =================================================================================================================
-	public abstract Ta getFirst();
-	public abstract Tb getSecond();
-	public abstract Tc getThird();
-	public abstract Td getFourth();
+	public static <A, B, C, D, E, F, G> ImmutableSeptet<A, B, C, D, E, F, G> of(A first, B second, C third, D fourth, E fifth
+			, F sixth, G seventh) {
+		return new ImmutableSeptet<A, B, C, D, E, F, G>(first, second, third, fourth, fifth, sixth, seventh);
+	}
 
 	// =================================================================================================================
 	// Inner and Anonymous Classes
