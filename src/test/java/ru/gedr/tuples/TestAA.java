@@ -27,10 +27,10 @@ public class TestAA extends TestA implements Comparable<TestAA> {
 	public int compareTo(TestAA that) {
 		int res = 0;
 		if ((that == null) || (this.getId() > that.getId())) {
-			res = -1;
+			res = +1;
 		}
 		if (this.getId() < that.getId()) {
-			res = +1;
+			res = -1;
 		}
 		return res;
 	}

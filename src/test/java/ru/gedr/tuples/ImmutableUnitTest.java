@@ -2,7 +2,9 @@ package ru.gedr.tuples;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.lessThan;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertFalse;
@@ -105,8 +107,8 @@ public class ImmutableUnitTest {
 		Unit<TestAA> uo2 = ImmutableUnit.of(new TestAA(2, "two"));
 		Unit<TestAA> uo3 = ImmutableUnit.of(new TestAA(3, "three"));
 		assertThat(uo1.compareTo(uo1), equalTo(0));
-		assertThat(uo1.compareTo(uo2), equalTo(1));
-		assertThat(uo3.compareTo(uo2), equalTo(-1));
+		assertThat(uo1.compareTo(uo2), lessThan(0));
+		assertThat(uo3.compareTo(uo2), greaterThan(0));
 	}
 
 	@Test(expected=UnsupportedOperationException.class)
