@@ -1,8 +1,7 @@
-package ru.gedr.comparators;
+package ru.gedr.tuples;
 
-import java.util.Objects;
 
-public class GenericComparator {
+public class TestAA extends TestA implements Comparable<TestAA> {
 	// =================================================================================================================
 	// Constants
 	// =================================================================================================================
@@ -14,10 +13,27 @@ public class GenericComparator {
 	// =================================================================================================================
 	// Constructors
 	// =================================================================================================================
+	public TestAA() {
+		super();
+	}
+
+	public TestAA(int id, String name) {
+		super(id, name);
+	}
 
 	// =================================================================================================================
 	// Methods for/from SuperClass/Interface
 	// =================================================================================================================
+	public int compareTo(TestAA that) {
+		int res = 0;
+		if ((that == null) || (this.getId() > that.getId())) {
+			res = -1;
+		}
+		if (this.getId() < that.getId()) {
+			res = +1;
+		}
+		return res;
+	}
 
 	// =================================================================================================================
 	// Getter & Setter
@@ -26,25 +42,6 @@ public class GenericComparator {
 	// =================================================================================================================
 	// Methods
 	// =================================================================================================================
-//	public static <T extends Comparable<? super T>> int compare(T lh, T rh) {
-	public static <T> int compare(T lh, T rh) {
-		if (Objects.equals(lh, rh)) {
-			return 0;
-		}
-		if (lh != null) {
-			if (rh == null) {
-				return -1;
-			} else {
-				if (!(lh instanceof Comparable<?>)) {
-					throw new UnsupportedOperationException(lh.getClass() + " unsuport Comparable interface");
-				}
-				@SuppressWarnings("unchecked")
-				Comparable<? super T> cmpr = (Comparable<? super T>) lh;
-				return cmpr.compareTo(rh);
-			}
-		}
-		return +1;
-	}
 
 	// =================================================================================================================
 	// Inner and Anonymous Classes

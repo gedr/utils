@@ -1,8 +1,8 @@
-package ru.gedr.comparators;
+package ru.gedr.tuples;
 
 import java.util.Objects;
 
-public class GenericComparator {
+class TestA {
 	// =================================================================================================================
 	// Constants
 	// =================================================================================================================
@@ -10,40 +10,77 @@ public class GenericComparator {
 	// =================================================================================================================
 	// Fields
 	// =================================================================================================================
+	private int id;
+	private String name;
 
 	// =================================================================================================================
 	// Constructors
 	// =================================================================================================================
+	public TestA() {
+		setId(0);
+		setName("unknown");
+	}
+
+	public TestA(int id, String name) {
+		setId(id);
+		setName(name);
+	}
 
 	// =================================================================================================================
 	// Methods for/from SuperClass/Interface
 	// =================================================================================================================
+	@Override
+	public String toString() {
+		return "(id : " + id + ", name : " + name + ")";
+	}
+
+	@Override
+	public int hashCode() {
+		return id;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof TestA)) {
+			return false;
+		}
+		TestA that = (TestA) obj;
+		return ((this.getId() == that.getId()) && Objects.equals(this.normalizeName(), that.normalizeName()));
+	}
 
 	// =================================================================================================================
 	// Getter & Setter
 	// =================================================================================================================
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	// =================================================================================================================
 	// Methods
 	// =================================================================================================================
-//	public static <T extends Comparable<? super T>> int compare(T lh, T rh) {
-	public static <T> int compare(T lh, T rh) {
-		if (Objects.equals(lh, rh)) {
-			return 0;
+	public String normalizeName() {
+		if (name == null) {
+			return name;
 		}
-		if (lh != null) {
-			if (rh == null) {
-				return -1;
-			} else {
-				if (!(lh instanceof Comparable<?>)) {
-					throw new UnsupportedOperationException(lh.getClass() + " unsuport Comparable interface");
-				}
-				@SuppressWarnings("unchecked")
-				Comparable<? super T> cmpr = (Comparable<? super T>) lh;
-				return cmpr.compareTo(rh);
-			}
-		}
-		return +1;
+		return name.toLowerCase();
 	}
 
 	// =================================================================================================================

@@ -1,8 +1,8 @@
-package ru.gedr.comparators;
+package ru.gedr.tuples;
 
-import java.util.Objects;
+import java.util.UUID;
 
-public class GenericComparator {
+public class TestB implements Comparable<TestB> {
 	// =================================================================================================================
 	// Constants
 	// =================================================================================================================
@@ -10,41 +10,40 @@ public class GenericComparator {
 	// =================================================================================================================
 	// Fields
 	// =================================================================================================================
+	private UUID uuid;
 
 	// =================================================================================================================
 	// Constructors
 	// =================================================================================================================
+	public TestB() {
+		setUuid(UUID.randomUUID());
+	}
+
+	public TestB(UUID uuid) {
+		setUuid(uuid);
+	}
 
 	// =================================================================================================================
 	// Methods for/from SuperClass/Interface
 	// =================================================================================================================
+	public int compareTo(TestB that) {
+		return that == null ? -1 : this.getUuid().compareTo(that.getUuid());
+	}
 
 	// =================================================================================================================
 	// Getter & Setter
 	// =================================================================================================================
+	public UUID getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
+	}
 
 	// =================================================================================================================
 	// Methods
 	// =================================================================================================================
-//	public static <T extends Comparable<? super T>> int compare(T lh, T rh) {
-	public static <T> int compare(T lh, T rh) {
-		if (Objects.equals(lh, rh)) {
-			return 0;
-		}
-		if (lh != null) {
-			if (rh == null) {
-				return -1;
-			} else {
-				if (!(lh instanceof Comparable<?>)) {
-					throw new UnsupportedOperationException(lh.getClass() + " unsuport Comparable interface");
-				}
-				@SuppressWarnings("unchecked")
-				Comparable<? super T> cmpr = (Comparable<? super T>) lh;
-				return cmpr.compareTo(rh);
-			}
-		}
-		return +1;
-	}
 
 	// =================================================================================================================
 	// Inner and Anonymous Classes
